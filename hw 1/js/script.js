@@ -3,25 +3,26 @@ console.log("Task 1");
 
 function pause(func, timeout) {
   return function() {
-    console.log(`Функция выполниться с задержкой в ${timeout} секунды!`);
+    console.log(`Функция выполнится с задержкой в ${timeout} секунды!`);
+    // let res = func.apply(this, arguments);
     setTimeout(() => {
-      return func()
+      return func.apply(this,arguments);
     }, timeout * 1000);
   }
 }
 
-function func() {
-  console.log("Функция выполнилась!");
+function f(n) {
+  console.log("Функция "+n+" выполнилась!");
 }
 
-let paused = pause(func, 2);
-paused();
+let paused = pause(f, 2);
+paused(3);
 
 //--------------------
 console.log("Task 2");
 function return_object(func, ...args){
   return function(){
-    let arr = func();
+    let arr = func.apply(this,arguments);
     let res = {};
     for(let i =0; i<arr.length;i++){
       res[args[i]] = arr[i];
