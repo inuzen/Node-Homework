@@ -16,20 +16,20 @@ http.createServer((request, response) => {
           numbers.push(parseInt(num));
         } else continue;
       }
-      let out1 = ""
+      let out1 = [];
       numbers.forEach((num) => {
-        if(num%2===0) out1+= num+" ";
+        if(num%2===0) out1.push(num);
       })
       let out2 = numbers.map((num) => {
         return num**3;
       });
 
       console.log(out1);
-      fs.writeFile('../out-1.txt', out1, (err) => {
+      fs.writeFile('../out-1.txt', out1.join(" "), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
       });
-      fs.writeFile('../out-2.txt', out2.toString().split(",").join(" "), (err) => {
+      fs.writeFile('../out-2.txt', out2.join(" "), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
       });
