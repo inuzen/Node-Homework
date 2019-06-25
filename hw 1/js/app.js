@@ -17,17 +17,28 @@ let html = "";
 
 html+= htmlStart;
 
-files.forEach(function(filename){
-  fs.readFile(filename, 'utf8', (err, data) => {
-    if (err) {
-      console.log('Couldnt locate or open file for reading\n');
+let promArr = files.map(function(filename){
+  return new Promise((resolve, reject) => {
 
-    } else {
-      console.log('The file ' + filename + ' is read and sent to the client \n');
-      html = html + data;
-    }
-  });
+    fs.readFile(filename, 'utf8', (err, data) => {
+      if (err) {
+        console.log('Couldnt locate or open file for reading\n');
+        reject("Reject");
+      } else {
+        console.log('The file ' + filename + ' is read and sent to the client \n');
+        resolve(data);
+      }
+    });
+
+ })
 });
+
+Promise.all( promArr )
+  .then(result => {
+    result.forEach((res) => {
+      html+=res;
+    })
+  });
 
 html+= htmlEnd;
 
