@@ -7,9 +7,9 @@ function* generatePassword(length){
   for (let i = 0; i<length; i++){
 
     let letter = String.fromCharCode(Math.floor(Math.random() *150));
-    console.log(letter);
+    // console.log(letter);
     res = reg.test(letter);
-    console.log(res);
+    // console.log(res);
     if (res) {
       pass += letter;
     }
