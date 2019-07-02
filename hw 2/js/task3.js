@@ -1,23 +1,23 @@
 const eventsObj = {};
 
 on('eat', stringData => {
-    console.log('Первым: Я кушаю  ' + stringData + '.');
+  console.log('Первым: Я кушаю  ' + stringData + '.');
 });
 
 on('eat', stringData => {
-    console.log('Вторым: Я кушаю  ' + stringData + '.');
+  console.log('Вторым: Я кушаю  ' + stringData + '.');
 });
 
 setTimeout(() => {
-    emit('eat', 'бутерброд');
+  emit('eat', 'бутерброд');
 }, 3000);
 
 setTimeout(() => {
-    emit('eat', 'мясо');
+  emit('eat', 'мясо');
 }, 2000);
 
 setTimeout(() => {
-    emit('eat', 'яблочко');
+  emit('eat', 'яблочко');
 }, 500);
 
 
