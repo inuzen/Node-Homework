@@ -26,9 +26,14 @@ function on(eventName, callback) {
     eventsObj[eventName] = eventsObj[eventName] || [];
     //Здесь нужно положить функцию обратного вызова в соответствующий массив
     //Здесь нужен ваш код
+    eventsObj[eventName].push(callback);
 }
 
 function emit(eventName, stringData) {
     //Здесь необходимо запустить каждую функцию обработчик относящиеся к данному событию
     //Здесь нужен ваш код
+    for (let callback of eventsObj[eventName]) {
+      callback(stringData);
+    }
+
 }
