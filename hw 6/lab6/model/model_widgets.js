@@ -69,3 +69,17 @@ exports.delete = function(id, callback) {
   }
   callback(null, null);
 };
+
+exports.change = function(id, data, callback) {
+  for (let i = 0; i < widgets.length; i++) {
+    if (id === widgets[i].id) {
+      if (!(data && data.name && data.price)) //если не все заданы поля возвращаем ошибку
+        return callback(newError('Error data'));
+      widgets[i].name = data.name;
+      widgets[i].price = parseFloat(data.price) || 0;
+      widgets[i].desc = data.desc || "";
+      callback(null, widgets[i]);
+      break;
+    }
+  }
+}

@@ -31,7 +31,8 @@ route.post('/add', (req, res, next)=>{
 
     db.add(req.body, (err, data)=>{
         if(err)
-            return res.send('Error add widget!');res.redirect('/widgets/');
+            return res.send('Error add widget!');
+        res.redirect('/widgets/');
     });
 });
 
@@ -58,4 +59,31 @@ route.post('/delete/:id', (req, res, next)=>{
         res.redirect('/widgets/');
     });
 });
+
+route.get('/change/:id',(req,res,next)=>{
+
+  db.find(parseInt(req.params.id), (err, data)=>{
+      if (err || !data)
+          return res.send('Error delete widget!');
+
+      res.render('change', {
+          title:"Change widget",
+          route_url:"/widgets",
+          data:data
+      });
+  });
+
+});
+
+route.post('/change/:id',(req,res,next)=>{
+
+  db.change(parseInt(req.params.id), req.body, (err, data)=>{
+      if (err || !data)
+          return res.send('Error changing widget!');
+      res.redirect('/widgets/');
+  });
+
+});
+
+
 module.exports = route;
