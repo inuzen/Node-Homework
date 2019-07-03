@@ -64,8 +64,8 @@ http.createServer((req, res) => {
     if (start >= stat.size || end >= stat.size) {
       responseHeaders['Content-Range'] = 'bytes */' + stat.size;
       console.log("Return the 416 'Requested Range Not Satisfiable'");
-      response.writeHead(416, responseHeaders);
-      response.end();
+      res.writeHead(416, responseHeaders);
+      res.end();
       return null;
     }
 
@@ -75,7 +75,7 @@ http.createServer((req, res) => {
     }
 
     responseHeaders['Content-Range'] = 'bytes '+start+'-'+end+'/'+stat.size;
-    responseHeaders['Content-Length'] = start==end?0: (end-start-1);
+    responseHeaders['Content-Length'] = start==end?0: (end-start+1);
     responseHeaders['Content-Type'] = mimeType[ext];
     responseHeaders['Accept-Ranges'] = 'bytes';
     responseHeaders['Cache-Control'] = 'no-cache';
@@ -86,8 +86,8 @@ http.createServer((req, res) => {
     fs.read(fd,buf,0,buf.length, start, (err,bytes) => {
       if (err) {
         console.log(err);
-        response.statusCode=500;
-        response.end();
+        res.statusCode=500;
+        res.end();
       } else {
         console.log(responseHeaders);
         res.writeHead(206, responseHeaders);

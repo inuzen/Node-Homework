@@ -15,7 +15,6 @@ const htmlEnd = `</body>
 
 let html = "";
 
-html+= htmlStart;
 
 let promArr = files.map(function(filename){
   return new Promise((resolve, reject) => {
@@ -33,17 +32,19 @@ let promArr = files.map(function(filename){
  })
 });
 
-Promise.all( promArr )
-  .then(result => {
-    result.forEach((res) => {
-      html+=res;
-    })
-  });
 
-html+= htmlEnd;
 
 http.createServer((request, response) => {
 
+  html+= htmlStart;
+  Promise.all( promArr )
+    .then(result => {
+      result.forEach((res) => {
+        html+=res;
+      })
+    });
+  html+= htmlEnd;
+  
   response.writeHead(200, {
     'Content-Type': 'text/html'
   });
